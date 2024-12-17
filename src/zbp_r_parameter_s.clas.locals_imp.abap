@@ -177,12 +177,13 @@ CLASS lhc_Param IMPLEMENTATION.
 
     DATA change TYPE REQUEST FOR CHANGE ZR_Parameter_S.
 
-    SELECT SINGLE TransportRequestID
-      FROM zparam_d_s
-      WHERE SingletonId = 1
-      INTO @DATA(TransportRequestID).
+    READ ENTITIES OF ZR_Parameter_S IN LOCAL MODE
+         ENTITY Param BY \_ParamAll
+         FIELDS ( TransportRequestID )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(Singleton).
 
-    lhc_rap_tdat_cts=>get( )->validate_changes( transport_request = TransportRequestID
+    lhc_rap_tdat_cts=>get( )->validate_changes( transport_request = Singleton[ 1 ]-TransportRequestID
                                                 table             = 'ZPARAM'
                                                 keys              = REF #( keys )
                                                 reported          = REF #( reported )
