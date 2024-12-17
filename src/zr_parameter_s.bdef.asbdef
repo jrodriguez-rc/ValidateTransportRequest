@@ -1,0 +1,70 @@
+managed with additional save implementation in class ZBP_R_PARAMETER_S unique;
+strict;
+with draft;
+
+define behavior for ZR_Parameter_S alias ParamAll
+draft table zparam_d_s
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master ( global )
+
+{
+  field ( readonly )
+  SingletonId;
+
+
+  update;
+  internal create;
+  internal delete;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _Param { create ( features : instance ); with draft; }
+}
+
+define behavior for ZR_Parameter alias Param
+persistent table zparam
+draft table zparam_d
+etag master EtagMaster
+lock dependent by _ParamAll
+authorization dependent by _ParamAll
+
+{
+  field ( mandatory : create )
+  Id;
+
+  field ( readonly )
+  SingletonId,
+  CreatedBy,
+  CreatedAt,
+  LastChangedBy,
+  LastChangedAt,
+  EtagMaster;
+
+  field ( readonly : update )
+  Id;
+
+
+  update ( features : global );
+  delete ( features : global );
+
+  mapping for zparam
+    {
+      Id            = ID;
+      Value         = VALUE;
+      CreatedBy     = CREATED_BY;
+      CreatedAt     = CREATED_AT;
+      LastChangedBy = LAST_CHANGED_BY;
+      LastChangedAt = LAST_CHANGED_AT;
+      EtagMaster    = ETAG_MASTER;
+    }
+
+  association _ParamAll { with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}

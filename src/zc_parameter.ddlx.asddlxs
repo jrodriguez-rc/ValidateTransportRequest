@@ -1,0 +1,36 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo: { typeName: 'Param',
+                  typeNamePlural: 'Params',
+                  title: { type: #STANDARD, label: 'Parameter', value: 'Id' } }
+
+annotate view ZC_Parameter with
+{
+
+  @UI.facet: [ { id: 'ZR_Parameter',
+                 purpose: #STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'Parameter',
+                 position: 1 } ]
+
+  @UI.identification: [ { position: 10, label: 'Id' } ]
+  @UI.lineItem: [ { position: 10, label: 'Id' } ]
+  Id;
+
+  @UI.identification: [ { position: 20, label: 'Value' } ]
+  @UI.lineItem: [ { position: 20, label: 'Value' } ]
+  Value;
+
+  @UI.identification: [ { position: 30 } ]
+  CreatedBy;
+
+  @UI.identification: [ { position: 40 } ]
+  CreatedAt;
+
+  @UI.identification: [ { position: 50 } ]
+  LastChangedBy;
+
+  @UI.identification: [ { position: 60 } ]
+  LastChangedAt;
+
+}

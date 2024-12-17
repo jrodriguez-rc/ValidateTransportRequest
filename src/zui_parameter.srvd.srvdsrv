@@ -1,0 +1,4 @@
+define service ZUI_PARAMETER {
+  expose ZC_PARAMETER_S as ParamAll;
+  expose ZC_PARAMETER as Param;
+}

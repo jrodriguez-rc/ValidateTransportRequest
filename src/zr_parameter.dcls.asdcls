@@ -1,0 +1,5 @@
+@MappingRole: true
+define role ZR_Parameter {
+  grant select on ZR_Parameter
+  where ( ) = ASPECT pfcg_auth ( 'S_TABU_NAM', ACTVT = '03', TABLE = 'ZR_PARAMETER' );
+}

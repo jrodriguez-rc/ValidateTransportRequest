@@ -1,0 +1,25 @@
+projection;
+strict;
+use draft;
+
+define behavior for ZC_Parameter_S alias ParamAll
+
+{
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action SelectCustomizingTransptReq;
+
+  use association _Param { create; with draft; }
+}
+
+define behavior for ZC_Parameter alias Param
+
+{
+  use update;
+  use delete;
+
+  use association _ParamAll { with draft; }
+}

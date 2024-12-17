@@ -1,0 +1,31 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo.typeName: 'ParamAll'
+
+annotate view ZC_Parameter_S with
+{
+
+  @UI.facet: [ { id: 'Transport',
+                 purpose: #STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'Transport',
+                 position: 10,
+                 hidden: #(HideTransport) },
+               { id: 'ZR_Parameter',
+                 purpose: #STANDARD,
+                 type: #LINEITEM_REFERENCE,
+                 label: 'Parameter',
+                 position: 20,
+                 targetElement: '_Param' } ]
+
+  @UI.lineItem: [ { position: 10 } ]
+  SingletonId;
+
+  @UI.hidden: true
+  HideTransport;
+
+  @UI.identification: [ { position: 20, importance: #HIGH },
+                        { type: #FOR_ACTION, dataAction: 'SelectCustomizingTransptReq', label: 'Select Transport' } ]
+  TransportRequestID;
+
+}
